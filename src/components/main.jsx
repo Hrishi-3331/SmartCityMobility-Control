@@ -9,14 +9,14 @@ import InfoIcon from '@material-ui/icons/Info';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Registeredvehicles from './registeredvehicles.jsx';
 
 const styles = (theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    background: '#082947',
-    color: 'white',
+    background: 'white',
     padding: '0',
   },
   paper: {
@@ -95,11 +95,15 @@ class Homepage extends React.Component{
        
     }
 
+    menuItemClick = (e, link) => {
+        this.props.history.push(link);
+    }
+
     render(){
-        const { classes } = this.props;
+        const { classes, firebase } = this.props;
 
         const menuItem = (title, link, icon) => (
-            <div className={classes.item} >
+            <div className={classes.item} onClick={e => this.menuItemClick(e, link)}>
                 <Grid container>
                     <Grid item xs={2} />
                     <Grid item xs={1}>
@@ -122,16 +126,16 @@ class Homepage extends React.Component{
                         <div className={classes.title}>
                             Smart City Mobility Control
                         </div>
-                        { menuItem("Traffic View", "/students", <MapIcon />) }
-                        { menuItem("Registered Vehicles", "/students", <DriveEtaIcon />) }   
-                        { menuItem("Exams", "/students", <AssessmentIcon />) }  
-                        { menuItem("Assignments", "/students", <AssignmentIcon />) }
-                        { menuItem("Announcements", "/students", <InfoIcon />) }
+                        { menuItem("Traffic View", "/", <MapIcon />) }
+                        { menuItem("Registered Vehicles", "/registeredVehicles", <DriveEtaIcon />) }   
+                        { menuItem("Exams", "/op3", <AssessmentIcon />) }  
+                        { menuItem("Assignments", "/op4", <AssignmentIcon />) }
+                        { menuItem("Announcements", "/op5", <InfoIcon />) }
                     </div>
                 </Grid>
                 <Grid item xs={false} sm={4} md={9} className={classes.image}>
                     {this.props.location.pathname === "/" ? (<Trafficmap/>) : (<div></div>)}
-                    {this.props.location.pathname === "/vehicles" ? (<Trafficmap/>) : (<div></div>)}
+                    {this.props.location.pathname === "/registeredVehicles" ? (<Registeredvehicles firebase={firebase}/>) : (<div></div>)}
                 </Grid>
             </Grid>
         )
